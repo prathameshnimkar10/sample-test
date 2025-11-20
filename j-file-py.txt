@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'LIST', defaultValue: '1,2,3,4,5', description: 'Comma-separated list of numbers')
+        string(name: 'TARGET', defaultValue: '3', description: 'Target number to search')
+    }
+
+    stages {
+        stage('Show Inputs') {
+            steps {
+                echo "List: ${params.LIST}"
+                echo "Target: ${params.TARGET}"
+            }
+        }
+
+        stage('Run Binary Search') {
+            steps {
+                sh """
+                python3 binary_search.py "${params.LIST}" "${params.TARGET}"
+                """
+            }
+        }
+    }
+}
